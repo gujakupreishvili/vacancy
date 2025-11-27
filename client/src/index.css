@@ -1,0 +1,12 @@
+@import "tailwindcss";
+
+body{
+  background-color: #0C1220;
+}
+
+@theme {
+  --color-gstore-blue: #3A6FF8;  
+  --color-gstore-midnight: #0C1220; 
+  --color-magic-gold: #F5C96B;  
+  --color-soft-silver: #DDE2E9; 
+}
