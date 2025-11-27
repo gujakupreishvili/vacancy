@@ -1,9 +1,15 @@
 import { useState } from "react";
 import vacancyData from "../../vacancy.json";
 import SubmitPopUp from "../submitPopUp/submitPopUp";
+import Button from "../button/button";
 
 export default function Home() {
-  const [submit, setSubmit] = useState(false)
+  const [submit, setSubmit] = useState(false);
+  const [getpostId, setgetPostId] =useState<number | null>(null)
+  const sendvacancy = (id: number) => {
+    setSubmit(true)
+    setgetPostId(id)
+  }
   return (
     <div className="flex flex-col px-5.5 lg:px-10 mt-[30px]">
       <h1 className="text-soft-silver text-[20px] lg:text-[30px]">
@@ -20,13 +26,15 @@ export default function Home() {
             <p className="text-gstore-midnight text-[14px]">
               {vac.description}
             </p>
-            <button onClick={()=>setSubmit(true)} className="bg-magic-gold text-gstore-midnight px-5 py-2 rounded-lg cursor-pointer">
-              გაგზავნა
-            </button>
+            <Button
+              text="გადმოგვიგზავნე რეზიუმე"
+              onClick={() => sendvacancy(vac.id)}
+              className="bg-magic-gold text-gstore-midnight px-5 py-2 rounded-lg cursor-pointer"
+            />
           </div>
         ))}
       </div>
-      {submit && <SubmitPopUp />}
+      {submit && <SubmitPopUp  setSubmit={setSubmit} getpostId={getpostId} />}
     </div>
   );
 }
