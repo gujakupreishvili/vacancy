@@ -12,8 +12,17 @@ const register = async (req, res) => {
 
   const { name, email, phone, vacancyId } = req.body;
 
+  if (!req.file) {
+    return res.status(400).json({
+      success: false,
+      error: "CV (PDF) is required"
+    });
+  }
+
+  const cvPath = req.file.path;
+
   try {
-    const user = await createUser(name, email, phone, vacancyId);
+    const user = await createUser(name, email, phone, vacancyId, cvPath);
     
     res.status(201).json({
       success: true,
@@ -23,7 +32,8 @@ const register = async (req, res) => {
         name: user.name,
         email: user.email,
         phone: user.phone,
-        vacancyId: user.vacancy_id
+        vacancyId: user.vacancy_id,
+        cvPath: user.cv_path
       }
     });
   } catch (error) {

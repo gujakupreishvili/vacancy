@@ -8,8 +8,8 @@ export type ButtonProps = {
   onClick?: () => void;
 };
 export type SendMessageTypes = {
-  fullName:string,
+  name:string,
   email: string,
   phone: string,
-  resume: File | null;
+  cv: File | null;
 }

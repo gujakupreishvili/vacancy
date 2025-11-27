@@ -1,7 +1,7 @@
 import * as Yup from "yup";
 
 export const SendMessageValidationSchema = Yup.object({
-  fullName: Yup.string().required("სახელი აუცილებელია"),
+  name: Yup.string().required("სახელი აუცილებელია"),
   email: Yup.string()
     .required("ელფოსტა აუცილებელია")
     .email("არასწორი ელფოსტის ფორმატი"),
@@ -10,7 +10,7 @@ export const SendMessageValidationSchema = Yup.object({
     .matches(/^[0-9]+$/, "მხოლოდ ციფრები")
     .min(9, "მინიმუმ 9 ციფრი")
     .max(9, "მაქსიმუმ 9 ციფრი"),
-  resume: Yup.mixed()
+  cv: Yup.mixed()
     .nullable()
     .required("რეზიუმე აუცილებელია")
     .test("fileExists", "რეზიუმე აუცილებელია", (value) => {

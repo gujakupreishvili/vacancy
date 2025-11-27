@@ -1,18 +1,18 @@
 const pool = require("../config/db");
 
-const createUser = async (name, email, phone, vacancyId) => {
+const createUser = async (name, email, phone, vacancyId, cvPath) => {
   const result = await pool.query(
-    `INSERT INTO users (name, email, phone, vacancy_id)
-     VALUES ($1, $2, $3, $4)
-     RETURNING id, name, email, phone, vacancy_id, created_at`,
-    [name, email, phone, vacancyId]
+    `INSERT INTO users (name, email, phone, vacancy_id, cv_path)
+     VALUES ($1, $2, $3, $4, $5)
+     RETURNING id, name, email, phone, vacancy_id, cv_path, created_at`,
+    [name, email, phone, vacancyId, cvPath]
   );
   return result.rows[0];
 };
 
 const getAllUsers = async () => {
   const result = await pool.query(
-    `SELECT id, name, email, phone, vacancy_id, created_at 
+    `SELECT id, name, email, phone, vacancy_id, cv_path, created_at 
      FROM users 
      ORDER BY created_at DESC`
   );
