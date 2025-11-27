@@ -1,7 +1,7 @@
 import { useState } from "react";
 import vacancyData from "../../vacancy.json";
-import SubmitPopUp from "../submitPopUp/submitPopUp";
-import Button from "../button/button";
+import SubmitPopUp from "../../components/submitPopUp/submitPopUp";
+import Button from "../../components/button/button";
 
 export default function Home() {
   const [submit, setSubmit] = useState(false);

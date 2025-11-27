@@ -1,39 +1,40 @@
-import React, { useRef } from 'react';
-import { useField } from 'formik';
+import React, { useRef, useEffect } from 'react';
+import { useField, useFormikContext } from 'formik';
 import { FiUpload, FiX } from 'react-icons/fi';
-
-interface FileInputProps {
-  name: string;
-  lableTxt: string;
-  accept?: string;
-  error?: string;
-  touched?: boolean;
-}
+import type { FileInputProps } from '../../types';
 
 export default function FileInput({
   name,
   lableTxt,
-  accept = ".pdf",
-  error,
-  touched
+  accept = ".pdf"
 }: FileInputProps) {
-  const [field, , helpers] = useField(name);
+  const [field, meta, helpers] = useField(name);
+  const { setFieldTouched, setFieldError } = useFormikContext();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
+  useEffect(() => {
+    if (field.value) {
+      setFieldError(name, undefined);
+    }
+  }, [field.value, name, setFieldError]);
 
+  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]; 
+    if (file) {
       if (file.type !== 'application/pdf') {
         helpers.setError('მხოლოდ PDF ფორმატი დაშვებულია');
+        helpers.setTouched(true);
         return;
-      }
+      } 
       if (file.size > 5 * 1024 * 1024) {
         helpers.setError('ფაილის ზომა არ უნდა აღემატებოდეს 5MB-ს');
+        helpers.setTouched(true);
         return;
       }
-      helpers.setValue(file);
-      helpers.setTouched(true);
+      await helpers.setValue(file);
+      await helpers.setError(undefined);
+      await setFieldError(name, undefined);
+      await setFieldTouched(name, true, false);
     }
   };
 
@@ -93,15 +94,15 @@ export default function FileInput({
           <button
             type="button"
             onClick={handleRemoveFile}
-            className="text-red-400 hover:text-red-300 transition-colors"
+            className="text-red-400 hover:text-red-300 transition-colors cursor-pointer"
           >
             <FiX className="text-xl" />
           </button>
         </div>
       )}
 
-      {touched && error && (
-        <p className="text-red-300 text-sm mt-1">{error}</p>
+      {meta.touched && meta.error && (
+        <p className="text-red-300 text-sm mt-1">{meta.error}</p>
       )}
     </div>
   );

@@ -66,7 +66,7 @@ export default function SubmitPopUp({
     <div className="w-full h-screen fixed bg-white/5 backdrop-blur-sm flex items-center justify-center top-0 bottom-0 left-0 right-0 z-50">
       <div className="bg-gray-400 p-10 rounded-lg shadow-lg w-[90%] lg:w-[35%] relative max-h-[90vh] overflow-y-auto">
         <CiCircleRemove
-          className="absolute text-white text-[28px] right-[13px] top-[10px] cursor-pointer hover:opacity-80"
+          className="absolute text-white text-[28px] right-[13px] top-2.5 cursor-pointer hover:opacity-80"
           onClick={() => setSubmit(false)}
         />
         <h2 className="text-white text-xl font-semibold mb-6">
@@ -113,8 +113,6 @@ export default function SubmitPopUp({
                 name="cv"
                 lableTxt="რეზიუმე (PDF)"
                 accept=".pdf"
-                error={errors.cv as string}
-                touched={touched.cv}
               />
               <Button
                 text={loading ? "იგზავნება..." : "გაგზავნა"}
